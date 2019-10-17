@@ -1,9 +1,11 @@
 package jpabook.jpashop.delivery;
 
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,12 +25,12 @@ public class Delivery {
   @Column(name = "delivery_id")
   private Long id;
 
-  @OneToOne(mappedBy = "delivery")
+  @OneToOne(mappedBy = "delivery", fetch = LAZY)
   private Order order;
 
   @Embedded
   private Address address;
 
-  @Enumerated(EnumType.STRING)
+  @Enumerated(STRING)
   private DeliveryStatus status;
 }

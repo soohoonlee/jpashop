@@ -1,5 +1,7 @@
 package jpabook.jpashop.category;
 
+import static javax.persistence.FetchType.LAZY;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -33,10 +35,15 @@ public class Category {
       inverseJoinColumns = @JoinColumn(name = "item_id"))
   private List<Item> items = new ArrayList<>();
 
-  @ManyToOne
+  @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "parent_id")
   private Category parent;
 
   @OneToMany(mappedBy = "parent")
   private List<Category> child = new ArrayList<>();
+
+  public void addChildCategory(Category child) {
+    this.child.add(child);
+    child.setParent(this);
+  }
 }

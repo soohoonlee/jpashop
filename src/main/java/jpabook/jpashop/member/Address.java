@@ -1,14 +1,15 @@
 package jpabook.jpashop.member;
 
+import static lombok.AccessLevel.PROTECTED;
+
 import javax.persistence.Embeddable;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Embeddable
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
 public class Address {
 
