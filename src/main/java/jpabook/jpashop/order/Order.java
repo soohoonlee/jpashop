@@ -3,6 +3,7 @@ package jpabook.jpashop.order;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
+import static lombok.AccessLevel.PROTECTED;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,12 +22,14 @@ import jpabook.jpashop.delivery.Delivery;
 import jpabook.jpashop.delivery.DeliveryStatus;
 import jpabook.jpashop.member.Member;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "orders")
 @Getter
 @Setter
+@NoArgsConstructor(access = PROTECTED)
 public class Order {
 
   @Id
