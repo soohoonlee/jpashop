@@ -3,6 +3,7 @@ package jpabook.jpashop.delivery;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -25,6 +26,7 @@ public class Delivery {
   @Column(name = "delivery_id")
   private Long id;
 
+  @JsonIgnore
   @OneToOne(mappedBy = "delivery", fetch = LAZY)
   private Order order;
 
