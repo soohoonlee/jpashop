@@ -34,23 +34,15 @@ public class OrderQueryRepository {
     return result;
   }
 
-  private Map<Long, List<OrderItemQueryDto>> findOrderItemMap(List<Long> orderIds) {
-    List<OrderItemQueryDto> orderItems = em.createQuery(
-        "select new jpabook.jpashop.order.query.OrderItemQueryDto(oi.order.id, i.name, oi.orderPrice, oi.count)"
-            + " from OrderItem oi"
-            + " join oi.item i"
-            + " where oi.order.id in :orderIds", OrderItemQueryDto.class)
-        .setParameter("orderIds", orderIds)
+  public List<OrderFlatDto> findAllByDtoFlat() {
+    return em.createQuery(
+        "select new jpabook.jpashop.order.query.OrderFlatDto(o.id, m.name, o.orderDate, o.status, d.address, i.name, oi.orderPrice, oi.count)"
+            + " from Order o"
+            + " join o.member m"
+            + " join o.delivery d"
+            + " join o.orderItems oi"
+            + " join oi.item i", OrderFlatDto.class)
         .getResultList();
-
-    return orderItems.stream()
-        .collect(groupingBy(OrderItemQueryDto::getOrderId));
-  }
-
-  private List<Long> toOrderIds(List<OrderQueryDto> result) {
-    return result.stream()
-          .map(OrderQueryDto::getOrderId)
-          .collect(toList());
   }
 
   private List<OrderItemQueryDto> findOrderItems(Long orderId) {
@@ -70,5 +62,24 @@ public class OrderQueryRepository {
             + " join o.member m"
             + " join o.delivery d", OrderQueryDto.class)
         .getResultList();
+  }
+
+  private Map<Long, List<OrderItemQueryDto>> findOrderItemMap(List<Long> orderIds) {
+    List<OrderItemQueryDto> orderItems = em.createQuery(
+        "select new jpabook.jpashop.order.query.OrderItemQueryDto(oi.order.id, i.name, oi.orderPrice, oi.count)"
+            + " from OrderItem oi"
+            + " join oi.item i"
+            + " where oi.order.id in :orderIds", OrderItemQueryDto.class)
+        .setParameter("orderIds", orderIds)
+        .getResultList();
+
+    return orderItems.stream()
+        .collect(groupingBy(OrderItemQueryDto::getOrderId));
+  }
+
+  private List<Long> toOrderIds(List<OrderQueryDto> result) {
+    return result.stream()
+        .map(OrderQueryDto::getOrderId)
+        .collect(toList());
   }
 }
