@@ -1,7 +1,5 @@
 package jpabook.jpashop.member;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 class MemberRepositoryTest {
 
   @Autowired
-  MemberRepository memberRepository;
+  MemberRepositoryOld memberRepository;
 
   @Test
   @Transactional
